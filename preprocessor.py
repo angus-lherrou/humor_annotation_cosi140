@@ -64,9 +64,9 @@ def tag_tweet(tweet_to_tag, span, entity_id):
     return tag
 
 
-def compose_xml(full_text, tweets):
-    return xml_start + f'<TEXT><![CDATA[{full_text}]]></TEXT>\n<TAGS>\n' \
-           + '\n'.join(tweets) + '\n</TAGS>\n' + xml_end
+def compose_xml(full_text, tweets=None):
+    return xml_start + f'<TEXT><![CDATA[{full_text}]]></TEXT>\n' \
+           + (('<TAGS>\n' + '\n'.join(tweets) + '\n</TAGS>\n') if tweets else '') + xml_end
 
 
 if __name__ == '__main__':
