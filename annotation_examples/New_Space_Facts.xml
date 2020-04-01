@@ -24,6 +24,7 @@
 <tweet id="tweet9" spans="919~937" text="651251708903817216"  />
 <Insult id="ISLT0" spans="-1~-1" text="" notes="Implying Donald Trump is racist" />
 <Insult id="ISLT2" spans="-1~-1" text="" notes="Speaker is insulting the addressee for vaping" />
+<Insult id="ISLT1" spans="-1~-1" text="" notes="Earth is vulnerable to trolling bc it&apos;s backwards for &quot;spacesplaining&quot;" />
 <Observational id="OBSV0" spans="-1~-1" text="" notes="Referencing how Florida is considered a uniquely bad part of the United States" />
 <Observational id="OBSV2" spans="-1~-1" text="" notes="Referencing Jupiter&apos;s gravity" />
 <Wordplay id="WPLY0" spans="-1~-1" text="" notes="Wordplay with the phrase/quote &quot;In space, no one can hear you scream&quot;" />
@@ -31,7 +32,12 @@
 <Wordplay id="WPLY3" spans="-1~-1" text="" notes="&quot;Uranus&quot; / &quot;Your Anus&quot; wordplay" />
 <Wordplay id="WPLY4" spans="-1~-1" text="" notes="Wordplay between outer space and storage/closet space" />
 <Wordplay id="WPLY5" spans="-1~-1" text="" notes="Wordplay with the phrase/quote &quot;In space, no one can hear you scream&quot;" />
+<Wordplay id="WPLY1" spans="-1~-1" text="" notes="Belt as analogy for constellation component vs belt as in clothing item" />
+<Wordplay id="WPLY6" spans="-1~-1" text="" notes="spacesplaining from presumably mansplaining" />
+<Vulgarity id="VLGR0" spans="-1~-1" text="" notes="Goes above and beyond typical Uranus pun by talking about a more immediate/graphic attribute of the anus" />
 <Absurdism id="ABSD0" spans="-1~-1" text="" notes="Orion&apos;s Belt is part of a constellation, so the idea that it would be a real belt made of leather is absurd" />
+<Absurdism id="ABSD1" spans="-1~-1" text="" notes="Analogy that uses the comedic form &quot;X are jus Y that Z&quot; which does not correspond to prexisting notions of stars or aliens in common understanding" />
+<Absurdism id="ABSD2" spans="-1~-1" text="" notes="Comparing two completely different categories of substance as if they are comparable" />
 <Humor id="H0" fromID="tweet0" fromText="651253441868771328" toID="WPLY0" toText="" />
 <Humor id="H1" toID="ISLT0" toText="" fromID="tweet1" fromText="651248544112766976" />
 <Humor id="H2" fromID="tweet5" fromText="651246758455025664" toID="OBSV0" toText="" />
@@ -41,5 +47,11 @@
 <Humor id="H7" fromID="tweet9" fromText="651251708903817216" toID="WPLY4" toText="" />
 <Humor id="H8" fromID="tweet1" fromText="651248544112766976" toID="OBSV2" toText="" />
 <Humor id="H9" fromID="tweet8" fromText="651239619564957697" toID="WPLY5" toText="" />
+<Humor id="H6" fromID="tweet2" fromText="651258462806999040" toID="WPLY1" toText="" />
+<Humor id="H10" fromID="tweet3" fromText="651245897045667840" toID="ABSD1" toText="" />
+<Humor id="H11" fromID="tweet4" fromText="651248628598706176" toID="ISLT1" toText="" />
+<Humor id="H12" fromID="tweet4" fromText="651248628598706176" toID="WPLY6" toText="" />
+<Humor id="H13" fromID="tweet6" fromText="651282146158444544" toID="ABSD2" toText="" />
+<Humor id="H14" fromID="tweet7" fromText="651239225254244352" toID="VLGR0" toText="" />
 </TAGS>
 </Humor_Annotation_COSI140_v1.0.1>
