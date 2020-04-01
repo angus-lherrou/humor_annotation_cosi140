@@ -1,11 +1,11 @@
-<!ENTITY name "Humor_Annotation_COSI140_v0.3" >
+<!ENTITY name "Humor_Annotation_COSI140_v1.0" >
 
 <!ELEMENT tweet ( #PCDATA ) >
 <!ATTLIST tweet id ID prefix="tweet" #REQUIRED >
-<!ATTLIST tweet tweet_uid CDATA #REQUIRED >
-<!ATTLIST tweet content CDATA #REQUIRED >
-<!ATTLIST tweet score ( 0 | 1 | 2 ) #REQUIRED >
-<!ATTLIST tweet hashtag CDATA #REQUIRED >
+<!ATTLIST tweet tweet_uid CDATA #IMPLIED >
+<!ATTLIST tweet content CDATA #IMPLIED >
+<!ATTLIST tweet score ( 0 | 1 | 2 ) #IMPLIED >
+<!ATTLIST tweet hashtag CDATA #IMPLIED >
 
 <!ELEMENT Humor EMPTY >
 
