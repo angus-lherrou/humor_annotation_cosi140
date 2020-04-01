@@ -1,4 +1,4 @@
-<!ENTITY name "Humor_Annotation_COSI140_v1.0" >
+<!ENTITY name "Humor_Annotation_COSI140_v1.0.1" >
 
 <!ELEMENT tweet ( #PCDATA ) >
 <!ATTLIST tweet id ID prefix="tweet" #REQUIRED >
@@ -14,6 +14,7 @@
 <!ELEMENT Observational ( #PCDATA ) >
 <!ELEMENT Wordplay ( #PCDATA ) >
 <!ELEMENT Vulgarity ( #PCDATA ) >
+<!ELEMENT Absurdism ( #PCDATA ) >
 <!ELEMENT Other ( #PCDATA ) >
 <!ELEMENT Not_Humor ( #PCDATA ) >
 
@@ -36,6 +37,10 @@
 <!ATTLIST Vulgarity id ID prefix="VLGR" #REQUIRED >
 <!ATTLIST Vulgarity spans CDATA #IMPLIED >
 <!ATTLIST Vulgarity notes CDATA #IMPLIED >
+
+<!ATTLIST Absurdism id ID prefix="ABSD" #REQUIRED >
+<!ATTLIST Absurdism spans CDATA #IMPLIED >
+<!ATTLIST Absurdism notes CDATA #IMPLIED >
 
 <!ATTLIST Other id ID prefix="OTHR" #REQUIRED >
 <!ATTLIST Other spans CDATA #IMPLIED >
