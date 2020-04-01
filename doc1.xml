@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Humor_Annotation_COSI140_v0.1>
+<TEXT><![CDATA[
+748933089922052096	@midnight  #AmericaIn4Words  Corn syrup and salt	0
+748932145285128192	@midnight  #AmericaIn4Words  Tastes great, less filling	0
+748939438307192832	#americain4words home of walking dead @midnight	0
+748925811017781249	Even police kill you #AmericaIn4Words @midnight	0
+748927856999358464	What the fuck, guys? #AmericaIn4Words @midnight	0
+748929661976076288	Democrats America's Retarded People  #AmericaIn4Words @midnight	0
+748930176747208706	Don't f**% with us.  #AmericaIn4Words @midnight	0
+748926695277752320	Red, White, and Nudes #AmericaIn4Words @midnight	0
+748938865117843456	@midnight too many fat kids #americain4words	0
+748926601472143360	Bacon goes in everything #AmericaIn4Words @midnight	0
+]]></TEXT>
+<TAGS>
+<insult id="i0" spans="1~19" text="748933089922052096" req3="NO" req4="NO" req1="YES" req2="YES" />
+</TAGS>
+</Humor_Annotation_COSI140_v0.1>

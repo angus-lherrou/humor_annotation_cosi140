@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Humor_Annotation_COSI140_v0.2>
+<TEXT><![CDATA[723137300717293568 @midnight #MakeTVShowsEvil The 666th Republican Primary Debate on @FoxNews 0
+723159024221470720 How I Met Your Mother -- Last Night #MakeTVShowsEvil @midnight 0
+723159820304551936 #MakeTVShowsEvil @TheDailyShow with Craig Kilborn @midnight 0
+723137629772865537 @midnight #MakeTVShowsEvil Are You Smarter Than a 5th Grade Sociopath 0
+723157204900151296 The Most Dangerous Newlywed Game @midnight #MakeTVShowsEvil 0
+723181894842507264 @midnight Who's the Mob Boss? #MakeTVShowsEvil 0
+723148229198540800 Once Upon a Crime #MakeTVShowsEvil @midnight 0
+723128281680113664 @midnight #MakeTVShowsEvil The Expanse: The Art of Gaping 0
+723160060948545537 3... 2... 1... Inappropriate Contact! #MakeTVShowsEvil @midnight 0
+723135580704518145 @midnight Law and Order and Death #MakeTVShowsEvil 0
+723126366644789249 @midnight #MakeTVShowsEvil Fuller House of a 1000 Corpses #tvmeetsmovies 0
+722629268769931264 Stalin the Family #MakeTVShowsEvil @midnight 1
+722631463552684032 The Kids In The Hell #MakeTVShowsEvil @midnight 1
+722629010631434242 Saved By The Beelzebub #MakeTVShowsEvil @midnight 1
+722630207899889665 DuckTales from the Crypt #MakeTVShowsEvil @midnight 1
+722639041129287685 Pee-wee's Prey House #MakeTVShowsEvil @midnight 1
+722628782780194816 Sanford and Son of Sam @midnight #MakeTVShowsEvil 1
+722628663993237505 #MakeTVShowsEvil  Buried With Children   @midnight 1
+722628886304026624 Perfect Stranglers #MakeTVShowsEvil @midnight 2
+722650930773172225 Better Call Salieri #MakeTVShowsEvil @midnight 1
+722634707612102656 The Unbreakable Kim Jong-un #MakeTVShowsEvil @midnight 1
+]]></TEXT>
+<TAGS>
+<tweet id="tweet0" tweet_uid="723137300717293568" spans="0~95" content="#MakeTVShowsEvil The 666th Republican Primary Debate on @FoxNews" score="0" hashtag="#maketvshowsevil" />
+<tweet id="tweet1" tweet_uid="723159024221470720" spans="96~179" content="How I Met Your Mother -- Last Night #MakeTVShowsEvil" score="0" hashtag="#maketvshowsevil" />
+<tweet id="tweet2" tweet_uid="723159820304551936" spans="180~260" content="#MakeTVShowsEvil @TheDailyShow with Craig Kilborn" score="0" hashtag="#maketvshowsevil" />
+<tweet id="tweet3" tweet_uid="723137629772865537" spans="261~351" content="#MakeTVShowsEvil Are You Smarter Than a 5th Grade Sociopath" score="0" hashtag="#maketvshowsevil" />
+<tweet id="tweet4" tweet_uid="723157204900151296" spans="352~432" content="The Most Dangerous Newlywed Game #MakeTVShowsEvil" score="0" hashtag="#maketvshowsevil" />
+<tweet id="tweet5" tweet_uid="723181894842507264" spans="433~500" content="Who's the Mob Boss? #MakeTVShowsEvil" score="0" hashtag="#maketvshowsevil" />
+<tweet id="tweet6" tweet_uid="723148229198540800" spans="501~566" content="Once Upon a Crime #MakeTVShowsEvil" score="0" hashtag="#maketvshowsevil" />
+<tweet id="tweet7" tweet_uid="723128281680113664" spans="567~645" content="#MakeTVShowsEvil The Expanse: The Art of Gaping" score="0" hashtag="#maketvshowsevil" />
+<tweet id="tweet8" tweet_uid="723160060948545537" spans="646~731" content="3... 2... 1... Inappropriate Contact! #MakeTVShowsEvil" score="0" hashtag="#maketvshowsevil" />
+<tweet id="tweet9" tweet_uid="723135580704518145" spans="732~803" content="Law and Order and Death #MakeTVShowsEvil" score="0" hashtag="#maketvshowsevil" />
+<tweet id="tweet10" tweet_uid="723126366644789249" spans="804~897" content="#MakeTVShowsEvil Fuller House of a 1000 Corpses #tvmeetsmovies" score="0" hashtag="#maketvshowsevil" />
+<tweet id="tweet11" tweet_uid="722629268769931264" spans="898~963" content="Stalin the Family #MakeTVShowsEvil" score="1" hashtag="#maketvshowsevil" />
+<tweet id="tweet12" tweet_uid="722631463552684032" spans="964~1032" content="The Kids In The Hell #MakeTVShowsEvil" score="1" hashtag="#maketvshowsevil" />
+<tweet id="tweet13" tweet_uid="722629010631434242" spans="1033~1103" content="Saved By The Beelzebub #MakeTVShowsEvil" score="1" hashtag="#maketvshowsevil" />
+<tweet id="tweet14" tweet_uid="722630207899889665" spans="1104~1176" content="DuckTales from the Crypt #MakeTVShowsEvil" score="1" hashtag="#maketvshowsevil" />
+<tweet id="tweet15" tweet_uid="722639041129287685" spans="1177~1245" content="Pee-wee's Prey House #MakeTVShowsEvil" score="1" hashtag="#maketvshowsevil" />
+<tweet id="tweet16" tweet_uid="722628782780194816" spans="1246~1316" content="Sanford and Son of Sam #MakeTVShowsEvil" score="1" hashtag="#maketvshowsevil" />
+<tweet id="tweet17" tweet_uid="722628663993237505" spans="1317~1388" content="#MakeTVShowsEvil Buried With Children" score="1" hashtag="#maketvshowsevil" />
+<tweet id="tweet18" tweet_uid="722628886304026624" spans="1389~1455" content="Perfect Stranglers #MakeTVShowsEvil" score="2" hashtag="#maketvshowsevil" />
+<tweet id="tweet19" tweet_uid="722650930773172225" spans="1456~1523" content="Better Call Salieri #MakeTVShowsEvil" score="1" hashtag="#maketvshowsevil" />
+<tweet id="tweet20" tweet_uid="722634707612102656" spans="1524~1599" content="The Unbreakable Kim Jong-un #MakeTVShowsEvil" score="1" hashtag="#maketvshowsevil" />
+</TAGS>
+</Humor_Annotation_COSI140_v0.2>

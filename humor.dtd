@@ -1,0 +1,46 @@
+<!ENTITY name "Humor_Annotation_COSI140_v0.3" >
+
+<!ELEMENT tweet ( #PCDATA ) >
+<!ATTLIST tweet id ID prefix="tweet" #REQUIRED >
+<!ATTLIST tweet tweet_uid CDATA #REQUIRED >
+<!ATTLIST tweet content CDATA #REQUIRED >
+<!ATTLIST tweet score ( 0 | 1 | 2 ) #REQUIRED >
+<!ATTLIST tweet hashtag CDATA #REQUIRED >
+
+<!ELEMENT Humor EMPTY >
+
+<!ELEMENT Irony ( #PCDATA ) >
+<!ELEMENT Insult ( #PCDATA ) >
+<!ELEMENT Observational ( #PCDATA ) >
+<!ELEMENT Wordplay ( #PCDATA ) >
+<!ELEMENT Vulgarity ( #PCDATA ) >
+<!ELEMENT Other ( #PCDATA ) >
+<!ELEMENT Not_Humor ( #PCDATA ) >
+
+<!ATTLIST Irony id ID prefix="IRNY" #REQUIRED >
+<!ATTLIST Irony spans CDATA #IMPLIED >
+<!ATTLIST Irony notes CDATA #IMPLIED >
+
+<!ATTLIST Insult id ID prefix="ISLT" #REQUIRED >
+<!ATTLIST Insult spans CDATA #IMPLIED >
+<!ATTLIST Insult notes CDATA #IMPLIED >
+
+<!ATTLIST Observational id ID prefix="OBSV" #REQUIRED >
+<!ATTLIST Observational spans CDATA #IMPLIED >
+<!ATTLIST Observational notes CDATA #IMPLIED >
+
+<!ATTLIST Wordplay id ID prefix="WPLY" #REQUIRED >
+<!ATTLIST Wordplay spans CDATA #IMPLIED >
+<!ATTLIST Wordplay notes CDATA #IMPLIED >
+
+<!ATTLIST Vulgarity id ID prefix="VLGR" #REQUIRED >
+<!ATTLIST Vulgarity spans CDATA #IMPLIED >
+<!ATTLIST Vulgarity notes CDATA #IMPLIED >
+
+<!ATTLIST Other id ID prefix="OTHR" #REQUIRED >
+<!ATTLIST Other spans CDATA #IMPLIED >
+<!ATTLIST Other notes CDATA #IMPLIED >
+
+<!ATTLIST Not_Humor id ID prefix="NHMR" #REQUIRED >
+<!ATTLIST Not_Humor spans CDATA #IMPLIED >
+<!ATTLIST Not_Humor notes CDATA #IMPLIED >

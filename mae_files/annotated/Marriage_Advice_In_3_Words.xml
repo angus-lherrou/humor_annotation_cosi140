@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Humor_Annotation_COSI140_v0.1>
+<TEXT><![CDATA[646859878590382080 Dance dance dance #marriageadvicein3words @midnight 0
+643612500269879298 Obey Lydia, Hardwick! #MarriageAdviceIn3Words @midnight @nerdist 1
+643620852588802049 Matching Face Tattoos #MarriageAdviceIn3Words @midnight 1
+646657126501212160 @midnight #marriageadvicein3words Don't get married 0
+643630292301914112 #MarriageAdviceIn3Words 1.marryhim 2.ormarryme 3.Imtheonewholuvsyababycantyasee @midnight 1
+643613394445185024 Delete AshleyMadison.com Account #MarriageAdviceIn3Words @midnight 1
+643617991645659137 I'm so alone #MarriageAdviceIn3Words @midnight 1
+643619704154755072 Kill Stranger together. #MarriageAdviceIn3Words @midnight 1
+643744693189144576 Delete These Tweets @midnight #MarriageAdviceIn3Words 1
+646498573065003008 "Relinquish the sheets" #MarriageAdviceIn3Words @midnight 0
+643618086512410624 @midnight #marriageadvicein3words chrome incognito mode. 2
+643613554260746241 Location, Location, Location @midnight #MarriageAdviceIn3Words 1
+]]></TEXT>
+<TAGS>
+<tweet id="tweet0" spans="0~72" text="646859878590382080 Dance dance dance #marriageadvicein3words @midnight 0" tweet_uid="646859878590382080" content="Dance dance dance #marriageadvicein3words" score="0" hashtag="#marriageadvicein3words" />
+<tweet id="tweet1" spans="73~158" text="643612500269879298 Obey Lydia, Hardwick! #MarriageAdviceIn3Words @midnight @nerdist 1" tweet_uid="643612500269879298" content="Obey Lydia, Hardwick! #MarriageAdviceIn3Words @nerdist" score="1" hashtag="#marriageadvicein3words" />
+<tweet id="tweet2" spans="159~235" text="643620852588802049 Matching Face Tattoos #MarriageAdviceIn3Words @midnight 1" tweet_uid="643620852588802049" content="Matching Face Tattoos #MarriageAdviceIn3Words" score="1" hashtag="#marriageadvicein3words" />
+<tweet id="tweet3" spans="236~308" text="646657126501212160 @midnight #marriageadvicein3words Don&apos;t get married 0" tweet_uid="646657126501212160" content="#marriageadvicein3words Don&apos;t get married" score="0" hashtag="#marriageadvicein3words" />
+<tweet id="tweet4" spans="309~419" text="643630292301914112 #MarriageAdviceIn3Words 1.marryhim 2.ormarryme 3.Imtheonewholuvsyababycantyasee @midnight 1" tweet_uid="643630292301914112" content="#MarriageAdviceIn3Words 1.marryhim 2.ormarryme 3.Imtheonewholuvsyababycantyasee" score="1" hashtag="#marriageadvicein3words" />
+<tweet id="tweet5" spans="420~507" text="643613394445185024 Delete AshleyMadison.com Account #MarriageAdviceIn3Words @midnight 1" tweet_uid="643613394445185024" content="Delete AshleyMadison.com Account #MarriageAdviceIn3Words" score="1" hashtag="#marriageadvicein3words" />
+<tweet id="tweet6" spans="508~575" text="643617991645659137 I&apos;m so alone #MarriageAdviceIn3Words @midnight 1" tweet_uid="643617991645659137" content="I&apos;m so alone #MarriageAdviceIn3Words" score="1" hashtag="#marriageadvicein3words" />
+<tweet id="tweet7" spans="576~654" text="643619704154755072 Kill Stranger together. #MarriageAdviceIn3Words @midnight 1" tweet_uid="643619704154755072" content="Kill Stranger together. #MarriageAdviceIn3Words" score="1" hashtag="#marriageadvicein3words" />
+<tweet id="tweet8" spans="655~729" text="643744693189144576 Delete These Tweets @midnight #MarriageAdviceIn3Words 1" tweet_uid="643744693189144576" content="Delete These Tweets #MarriageAdviceIn3Words" score="1" hashtag="#marriageadvicein3words" />
+<tweet id="tweet9" spans="730~808" text="646498573065003008 &quot;Relinquish the sheets&quot; #MarriageAdviceIn3Words @midnight 0" tweet_uid="646498573065003008" content="&quot;Relinquish the sheets&quot; #MarriageAdviceIn3Words" score="0" hashtag="#marriageadvicein3words" />
+<tweet id="tweet10" spans="809~886" text="643618086512410624 @midnight #marriageadvicein3words chrome incognito mode. 2" tweet_uid="643618086512410624" content="#marriageadvicein3words chrome incognito mode." score="2" hashtag="#marriageadvicein3words" />
+<tweet id="tweet11" spans="887~970" text="643613554260746241 Location, Location, Location @midnight #MarriageAdviceIn3Words 1" tweet_uid="643613554260746241" content="Location, Location, Location #MarriageAdviceIn3Words" score="1" hashtag="#marriageadvicein3words" />
+<Observational id="OBSV0" spans="446~463" text="AshleyMadison.com" notes="Cheating scandal" />
+<Humor id="H0" fromID="tweet5" fromText="643613394445185024 Delete AshleyMadison.com Account #MarriageAdviceIn3Words @midnight 1" toID="OBSV0" toText="AshleyMadison.com" />
+</TAGS>
+</Humor_Annotation_COSI140_v0.1>
