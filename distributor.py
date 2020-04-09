@@ -52,6 +52,20 @@ def distribute_to_annotators(annotators: list):
         with open(f"packages/{annotator}/{file[:-4]}.xml", 'w') as xml:
             xml.write(compose_xml(text))
 
+        if sum(anno.count for anno in annotator_counts) > 3000:
+            break
+
+    with open(f"train_dir/train_data/420_Celebs.tsv", 'r') as tsv:
+        text = tsv.read()
+        num_tweets = len(text.splitlines())
+    with open(f"packages/katie/420_Celebs.xml", "w") as celebs:
+        celebs.write(compose_xml(text))
+    with open(f"packages/jiaying/420_Celebs.xml", "w") as celebs:
+        celebs.write(compose_xml(text))
+
+    for annotator in annotator_counts:
+        print(num_tweets)
+        print(annotator.name, annotator.count)
 
 
 if __name__ == '__main__':
