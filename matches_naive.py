@@ -145,17 +145,20 @@ def resolve(f1, f2, outfile):
         print("annotator 2 tags {0}".format(discrepancies[key][f2][1]))
         unresolved = True
         while unresolved:
-            choice = input("Enter annotator number: ")
+            choice = input("Enter annotator number(s): ")
             try:
-                val = int(choice)
+                val = int(choice.replace(' ', ''))
                 if val == 1:
                     results[key] = [tweet_text, discrepancies[key][f1][1]]
                     unresolved = False
                 elif val == 2:
                     results[key] = [tweet_text, discrepancies[key][f2][1]]
                     unresolved = False
+                elif val == 12:
+                    results[key] = [tweet_text, discrepancies[key][f1][1] | discrepancies[key][f2][1]]
+                    unresolved = False
             except ValueError:
-                print("Need an integer 1 or 2")
+                print("Need an integer: 1, 2, or 12 for both")
     return results
 
 
