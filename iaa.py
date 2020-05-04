@@ -14,7 +14,6 @@ def adjudicate(directory):
 
     for root, dirs, files in os.walk(directory, topdown=True):
         if len(dirs) == 0:
-            print("doing it")
             annotators = []
             for name in files:
                 annotators.append(str(name.split('_')[0]))

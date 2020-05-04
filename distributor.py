@@ -1,7 +1,12 @@
 import os
+import shutil
 from typing import List
 from collections import namedtuple
 from preprocessor import compose_xml
+from itertools import cycle
+
+ANNO_DIR = 'annotated_data'
+OUT_DIR = 'adjudication'
 
 Annotator = namedtuple('Annotator', 'name count')
 
@@ -68,5 +73,30 @@ def distribute_to_annotators(annotators: list):
         print(annotator.name, annotator.count)
 
 
+def distribute_to_adjudicators(adjudicators: list):
+    adjudicator = cycle(adjudicators)
+    adj_dict = {}
+
+    if not os.path.exists(OUT_DIR):
+        os.mkdir(OUT_DIR)
+
+    for root, dirs, files in os.walk(ANNO_DIR):
+        for name in files:
+            if len(dirs) == 0:
+                if name in adj_dict:
+                    this_adjudicator = adj_dict[name]
+                else:
+                    this_adjudicator = next(adjudicator)
+                    adj_dict[name] = this_adjudicator
+                if not os.path.exists(os.path.join(OUT_DIR, this_adjudicator)):
+                    os.mkdir(os.path.join(OUT_DIR, this_adjudicator))
+                if not os.path.exists(os.path.join(OUT_DIR, this_adjudicator, name[:-4])):
+                    os.mkdir(os.path.join(OUT_DIR, this_adjudicator, name[:-4]))
+                shutil.copy(os.path.join(root, name),
+                            os.path.join(OUT_DIR, this_adjudicator, name[:-4],
+                                         f'{os.path.split(root)[-1]}_{name}'))
+
+
 if __name__ == '__main__':
-    distribute_to_annotators(["katie", "jiaying", "linxuan"])
+    # distribute_to_annotators(["katie", "jiaying", "linxuan"])
+    distribute_to_adjudicators(["angus", "eli", "joe"])
