@@ -103,32 +103,38 @@ def resolve(f1, f2, outfile):
     discrepancies = defaultdict(dict)
     results = defaultdict(list)
     for key in tagged_tweets_1.keys():
+        # defaults so no unmentioned var errors
+        an1_label = set()
+        an2_label = set()
         if tagged_tweets_1[key] == tagged_tweets_2[key]:
             textid = list(tagged_tweets_1[key][0])[0]
             # add text and tags
             results[key] = [' '.join(tweet_dict[textid]), tagged_tweets_1[key][1]]
-            an1_idx = labels.index(tagged_tweets_1[key][1])
-            an2_idx = labels.index(tagged_tweets_2[key][1])
-            ck_mtx[an1_idx][an2_idx] += 1
+            an1_label = tagged_tweets_1[key][1]
+            an2_label = tagged_tweets_2[key][1]
         else:
             if tagged_tweets_1[key] and tagged_tweets_2[key]:
                 discrepancies[key][f1] = tagged_tweets_1[key]
                 discrepancies[key][f2] = tagged_tweets_2[key]
-                an1_idx = labels.index(tagged_tweets_1[key][1])
-                an2_idx = labels.index(tagged_tweets_2[key][1])
-                ck_mtx[an1_idx][an2_idx] += 1
+                an1_label = tagged_tweets_1[key][1]
+                an2_label = tagged_tweets_2[key][1]
             elif not tagged_tweets_1[key]:
                 discrepancies[key][f1] = [tagged_tweets_2[key][0], {'MISSING'}]
                 discrepancies[key][f2] = tagged_tweets_2[key]
-                an1_idx = labels.index(set())
-                an2_idx = labels.index(tagged_tweets_2[key][1])
-                ck_mtx[an1_idx][an2_idx] += 1
+                an1_label = set()
+                an2_label = tagged_tweets_2[key][1]
             elif not tagged_tweets_2[key]:
                 discrepancies[key][f1] = tagged_tweets_1[key]
                 discrepancies[key][f2] = [tagged_tweets_1[key][0], {'MISSING'}]
-                an1_idx = labels.index(tagged_tweets_1[key][1])
-                an2_idx = labels.index(set())
-                ck_mtx[an1_idx][an2_idx] += 1
+                an1_label = tagged_tweets_1[key][1]
+                an2_label = set()
+        if an1_label not in labels:
+            an1_label = set()
+        if an2_label not in labels:
+            an2_label = set()
+        an1_i = labels.index(an1_label)
+        an2_i = labels.index(an2_label)
+        ck_mtx[an1_i][an2_i] += 1
     np.savetxt(outfile, ck_mtx, delimiter=",")
     for key in discrepancies:
         textid = list(discrepancies[key][f1][0])[0]
@@ -139,13 +145,17 @@ def resolve(f1, f2, outfile):
         print("annotator 2 tags {0}".format(discrepancies[key][f2][1]))
         unresolved = True
         while unresolved:
-            choice = int(input("Enter annotator number: "))
-            if choice == 1:
-                results[key] = [tweet_text, discrepancies[key][f1][1]]
-                unresolved = False
-            elif choice == 2:
-                results[key] = [tweet_text, discrepancies[key][f2][1]]
-                unresolved = False
+            choice = input("Enter annotator number: ")
+            try:
+                val = int(choice)
+                if val == 1:
+                    results[key] = [tweet_text, discrepancies[key][f1][1]]
+                    unresolved = False
+                elif val == 2:
+                    results[key] = [tweet_text, discrepancies[key][f2][1]]
+                    unresolved = False
+            except ValueError:
+                print("Need an integer 1 or 2")
     return results
 
 
