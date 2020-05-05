@@ -61,8 +61,6 @@ def get_tweet_dict(xmlf1, xmlf2):
 
 def parseXML(xmlfile):
     d_tags = defaultdict(set)
-    d_texts = defaultdict(set)
-    d_merged = defaultdict(list)
     # create element tree object 
     tree = ET.parse(xmlfile) 
     # get root element 
@@ -73,24 +71,19 @@ def parseXML(xmlfile):
         # (Not_Humor being one of the humor subtags)
         if child.tag == 'Humor':
             # Guard here bc sometimes tweetID was missing in the tag
-            if 'fromID' in child.attrib:
-                tweet = child.attrib['fromID']
+            if 'fromText' in child.attrib:
+                tweet = child.attrib['fromText']
                 # guard boolean here bc people sometimes tagged tags
                 #d[tweet] = [set(), set()]
-                istweet = ''.join(char for char in tweet if char.isalpha()) == 'tweet'
+                istweet = False
+                if 'fromID' in child.attrib:
+                    istweet = ''.join(char for char in child.attrib['fromID'] if char.isalpha()) == 'tweet'
                 if 'toID' in child.attrib and istweet:
                     # for lack of an easier way to get tags get the 'OBSV' or 'WPLY'
                     # (observational and wordplay) from pointers to tags like 'OBSV45' etc
                     tag = ''.join(char for char in child.attrib['toID'] if char.isalpha())
                     d_tags[tweet].add(tag)
-                if 'fromText' in child.attrib and istweet:
-                    d_texts[tweet].add(child.attrib['fromText'])
-    for key in d_tags.keys():
-        if d_tags[key]:
-            d_merged[key] = [d_texts[key], d_tags[key]]
-        else:
-            d_merged[key] = [d_texts[key], {}]
-    return d_merged
+    return d_tags
 
 
 def resolve(f1, f2, outfile):
@@ -107,26 +100,25 @@ def resolve(f1, f2, outfile):
         an1_label = set()
         an2_label = set()
         if tagged_tweets_1[key] == tagged_tweets_2[key]:
-            textid = list(tagged_tweets_1[key][0])[0]
             # add text and tags
-            results[key] = [' '.join(tweet_dict[textid]), tagged_tweets_1[key][1]]
-            an1_label = tagged_tweets_1[key][1]
-            an2_label = tagged_tweets_2[key][1]
+            results[key] = [' '.join(tweet_dict[key]), tagged_tweets_1[key]]
+            an1_label = tagged_tweets_1[key]
+            an2_label = tagged_tweets_2[key]
         else:
             if tagged_tweets_1[key] and tagged_tweets_2[key]:
                 discrepancies[key][f1] = tagged_tweets_1[key]
                 discrepancies[key][f2] = tagged_tweets_2[key]
-                an1_label = tagged_tweets_1[key][1]
-                an2_label = tagged_tweets_2[key][1]
+                an1_label = tagged_tweets_1[key]
+                an2_label = tagged_tweets_2[key]
             elif not tagged_tweets_1[key]:
-                discrepancies[key][f1] = [tagged_tweets_2[key][0], {'MISSING'}]
+                discrepancies[key][f1] = {'MISSING -- DO NOT PICK!'}
                 discrepancies[key][f2] = tagged_tweets_2[key]
                 an1_label = set()
-                an2_label = tagged_tweets_2[key][1]
+                an2_label = tagged_tweets_2[key]
             elif not tagged_tweets_2[key]:
                 discrepancies[key][f1] = tagged_tweets_1[key]
-                discrepancies[key][f2] = [tagged_tweets_1[key][0], {'MISSING'}]
-                an1_label = tagged_tweets_1[key][1]
+                discrepancies[key][f2] = {'MISSING -- DO NOT PICK!'}
+                an1_label = tagged_tweets_1[key]
                 an2_label = set()
         if an1_label not in labels:
             an1_label = set()
@@ -137,25 +129,24 @@ def resolve(f1, f2, outfile):
         ck_mtx[an1_i][an2_i] += 1
     np.savetxt(outfile, ck_mtx, delimiter=",")
     for key in discrepancies:
-        textid = list(discrepancies[key][f1][0])[0]
-        tweet_text = ' '.join(tweet_dict[textid])
+        tweet_text = ' '.join(tweet_dict[key])
         print("RESOLVE:")
         print("Tweet: {0}".format(tweet_text))
-        print("annotator 1 tags {0}".format(discrepancies[key][f1][1]))
-        print("annotator 2 tags {0}".format(discrepancies[key][f2][1]))
+        print("annotator 1 tags {0}".format(discrepancies[key][f1]))
+        print("annotator 2 tags {0}".format(discrepancies[key][f2]))
         unresolved = True
         while unresolved:
             choice = input("Enter annotator number(s): ")
             try:
                 val = int(choice.replace(' ', ''))
                 if val == 1:
-                    results[key] = [tweet_text, discrepancies[key][f1][1]]
+                    results[key] = [tweet_text, discrepancies[key][f1]]
                     unresolved = False
                 elif val == 2:
-                    results[key] = [tweet_text, discrepancies[key][f2][1]]
+                    results[key] = [tweet_text, discrepancies[key][f2]]
                     unresolved = False
                 elif val == 12:
-                    results[key] = [tweet_text, discrepancies[key][f1][1] | discrepancies[key][f2][1]]
+                    results[key] = [tweet_text, discrepancies[key][f1] | discrepancies[key][f2]]
                     unresolved = False
             except ValueError:
                 print("Need an integer: 1, 2, or 12 for both")
