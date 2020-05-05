@@ -7,7 +7,7 @@ from iaa import KAPPA_DIR
 def kappa(directory):
     arr = np.zeros((num_labels, num_labels))
     for filepath in os.listdir(directory):
-        arr += np.loadtxt(filepath, delimiter=',')
+        arr += np.loadtxt(os.path.join(directory, filepath), delimiter=',')
     total = arr.sum()
     p_o = arr.trace() / total
     p_e = 0
@@ -19,4 +19,5 @@ def kappa(directory):
 
 if __name__ == '__main__':
     for folder in os.listdir(KAPPA_DIR):
-        print(folder, kappa(folder))
+        if os.path.isdir(os.path.join(KAPPA_DIR, folder)):
+            print(folder, kappa(os.path.join(KAPPA_DIR, folder)))
