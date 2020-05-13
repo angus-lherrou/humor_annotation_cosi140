@@ -5,6 +5,7 @@ import numpy as np
 from nltk import word_tokenize, pos_tag
 from nltk.stem.wordnet import WordNetLemmatizer
 from nltk.corpus import wordnet as wn
+from nltk.corpus import sentiwordnet as swn
 from sklearn import preprocessing
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
@@ -12,7 +13,7 @@ from sklearn.multioutput import MultiOutputClassifier
 from sklearn.metrics import classification_report
 from profanity_check import predict_prob
 
-#totals = {'ANC-spoken-freqs.txt' : 3862172, 'ANC-written-freqs.txt': 18302813}
+totals = {'ANC-spoken-freqs.txt' : 3862172, 'ANC-written-freqs.txt': 18302813}
 humor_labels = ['ABSD', 'IRNY', 'ISLT', 'OBSV', 'VLGR', 'WPLY', 'OTHR', 'NHMR']
 penn_to_universal = {'EX':'PRON', 'MD':'VERB', 'WDT':'DET', 'VBD':'VERB', 'VBN':'VERB', 'RBS':'ADV',
                      'VBZ':'VERB', 'JJR':'ADJ', 'MD|VB':'VERB', 'TO':'PART', 'RB':'ADV', 'DT':'DET',
@@ -66,7 +67,7 @@ def process(path='gold/'):
 
     return d
 
-def train_test(d):
+def train_test(d, spoken=None, written=None):
     samples = []
     labels = []
     unwanted_named_entites = set(['DATE','TIME','PERCENT','MONEY','QUANTITY', 'ORDINAL', 'CARDINAL'])
@@ -100,7 +101,7 @@ def train_test(d):
             features.append(tag_freq['VERB']) # verb count
             features.append(tag_freq['ADJ']) # adj count
             features.append(tag_freq['ADV']) # adv count
-            features.append(tag_freq['.'])   # pnuctuation count
+            features.append(tag_freq['.'])   # punctuation count
             features.append(tag_freq['NOUN'] / len(tokenized))  # noun count to total word count
             features.append(tag_freq['VERB'] / len(tokenized))  # verb count to total word count
             features.append(tag_freq['ADJ'] / len(tokenized))  # adj count to total word count
@@ -111,6 +112,8 @@ def train_test(d):
             features.append(avg_synset_count) # average synset count per word
             features.append(max(synset_counts)) # max synset count a word has
             features.append(max(synset_counts) - avg_synset_count) # difference between greatest and avg synset count
+
+            features.extend(get_intensities(tagged)) # multiple intensity related
 
             #tweet_spoken_freqs = freq_features(tagged, spoken)
             #tweet_written_freqs = freq_features(tagged, written)
@@ -162,6 +165,47 @@ def freq_features(tagged, freqs):
     final.append(max(frequencies) - min(frequencies)) # difference between most and least common
     return final
 
+def get_intensities(tagged):
+    code_to_list = {'a': [], 'r':[]}
+    final = []
+
+    for (word, pos) in tagged:
+        if pos == 'ADV':
+            code = 'r'
+        elif pos == 'ADJ':
+            code = 'a'
+        else:
+            continue
+        l = lookup(word, code)
+        if l is not None:
+            code_to_list[code].append(l)
+
+    for scores in code_to_list.values():
+        total = sum(scores)
+        if len(scores) == 0:
+            avg = 0
+            highest = 0
+        else:
+            avg = total/len(scores)
+            highest = max(scores)
+
+        final.append(total) # sum of all scores
+        final.append(avg) # avg score
+        final.append(highest) # max score
+        final.append(highest - avg) # gap
+    return final
+
+def lookup(word, pos_code):
+    lm = WordNetLemmatizer()
+    s = list(swn.senti_synsets(lm.lemmatize(word), pos_code))
+    if len(s) != 0:
+        return max([s[0].pos_score(), s[0].neg_score()])
+    else:
+        return None
+
+'''
+Thanks to Eli Goldner for this function
+'''
 def present(guesses):
     results = np.zeros(len(humor_labels))
     for idx in range(len(humor_labels)):
