@@ -1,3 +1,4 @@
+#Joseph Antaki
 import os, re
 from collections import defaultdict
 import spacy
@@ -13,17 +14,7 @@ from sklearn.multioutput import MultiOutputClassifier
 from sklearn.metrics import classification_report
 from profanity_check import predict_prob
 
-totals = {'ANC-spoken-freqs.txt' : 3862172, 'ANC-written-freqs.txt': 18302813}
 humor_labels = ['ABSD', 'IRNY', 'ISLT', 'OBSV', 'VLGR', 'WPLY', 'OTHR', 'NHMR']
-penn_to_universal = {'EX':'PRON', 'MD':'VERB', 'WDT':'DET', 'VBD':'VERB', 'VBN':'VERB', 'RBS':'ADV',
-                     'VBZ':'VERB', 'JJR':'ADJ', 'MD|VB':'VERB', 'TO':'PART', 'RB':'ADV', 'DT':'DET',
-                    'RBR':'ADV', 'SYM':'SYM', 'NNS|VBZ':'X', 'IN':'ADP', 'VB':'VERB', 'NNS':'NOUN',
-                     'CC':'CCONJ', 'NN|CD':'NUM', 'FW':'X', 'PRP$':'DET', 'WP$':'DET',
-                     'NN':'NOUN', 'VBP':'VERB', 'POS':'PART', 'UH':'INTJ',
-                     'JJ':'ADJ', 'VBG|NN':'X', 'NNP':'NOUN', 'RP':'ADP',
-                     'JJS':'ADJ', 'VBG':'VERB', 'NNPS':'NOUN', 'UNC':'X',
-                      'PRP':'PRON', 'PDT':'DET', 'WRB':'ADV', 'WP':'PRON',
-                      'NN|JJ':'NOUN'}
 
 def process(path='gold/'):
     d = {}
@@ -67,7 +58,7 @@ def process(path='gold/'):
 
     return d
 
-def train_test(d, spoken=None, written=None):
+def train_test(d):
     samples = []
     labels = []
     unwanted_named_entites = set(['DATE','TIME','PERCENT','MONEY','QUANTITY', 'ORDINAL', 'CARDINAL'])
@@ -115,55 +106,25 @@ def train_test(d, spoken=None, written=None):
 
             features.extend(get_intensities(tagged)) # multiple intensity related
 
-            #tweet_spoken_freqs = freq_features(tagged, spoken)
-            #tweet_written_freqs = freq_features(tagged, written)
-            #features.extend(tweet_spoken_freqs) # multiple
-            #features.extend(tweet_written_freqs) # multiple
-            #features.append(tweet_written_freqs[0] - tweet_spoken_freqs[0]) # difference between averages
-
             samples.append(features)
             labels.append(humor)
 
     samples = preprocessing.scale(samples)
 
-    #Convert to ndarray since the fellas at sklearn don't consistently treat lists as "array-like"
     samples = np.array(samples)
     labels = np.array(labels)
 
     x_train, x_test, y_train, y_test = train_test_split(samples, labels, test_size=0.33)
 
     lr = LogisticRegression(multi_class='multinomial', max_iter=500)
+    # Logistic Regression doesn't handle multiple classification natively,
+    # so MultiOutputClassifier can brute-force it into acting like it does
     moc = MultiOutputClassifier(lr)
     moc = moc.fit(x_train, y_train)
-    #lr = lr.fit(x_train, y_train)
     print("Accuracy:", moc.score(x_test, y_test))
 
     y_pred = moc.predict(x_test)
     print(classification_report(y_test, y_pred, target_names=humor_labels))
-
-def get_frequencies(source):
-    freqs = defaultdict(lambda: defaultdict(int))
-    with open(source) as file:
-        for line in file:
-            line = line.split('\t')
-            inner = defaultdict(int)
-            inner[penn_to_universal[line[2]]] = float(line[3]) / totals[source]
-            freqs[line[1]] = inner
-
-    return freqs
-
-def freq_features(tagged, freqs):
-    lm = WordNetLemmatizer()
-    frequencies = []
-    for i in range(len(tagged)):
-        frequencies.append(lm.lemmatize(tagged[i][0]))
-        frequencies[i] = freqs[frequencies[i]][tagged[i][1]]
-
-    final = []
-    final.append(sum(frequencies) / len(frequencies)) # average over tweet
-    final.append(min(frequencies)) # most uncommon
-    final.append(max(frequencies) - min(frequencies)) # difference between most and least common
-    return final
 
 def get_intensities(tagged):
     code_to_list = {'a': [], 'r':[]}
@@ -175,9 +136,10 @@ def get_intensities(tagged):
         elif pos == 'ADJ':
             code = 'a'
         else:
+            #If the word is not an adjective or adverb, don't score it
             continue
         l = lookup(word, code)
-        if l is not None:
+        if l is not None: # if the word has a score in sentiwordnet
             code_to_list[code].append(l)
 
     for scores in code_to_list.values():
@@ -199,6 +161,8 @@ def lookup(word, pos_code):
     lm = WordNetLemmatizer()
     s = list(swn.senti_synsets(lm.lemmatize(word), pos_code))
     if len(s) != 0:
+        # As a measure of intensity, take the highest score between the word's
+        # positive and negative scores
         return max([s[0].pos_score(), s[0].neg_score()])
     else:
         return None
@@ -215,6 +179,4 @@ def present(guesses):
 
 if __name__ == "__main__":
     data = process()
-    #spoken_freqs = get_frequencies('ANC-spoken-freqs.txt')
-    #written_freqs = get_frequencies('ANC-written-freqs.txt')
     train_test(data)
