@@ -4,19 +4,15 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report
 from sklearn.feature_extraction import DictVectorizer
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MultiLabelBinarizer
 from sklearn.neural_network import MLPClassifier
 from operator import itemgetter
 from nltk.stem import PorterStemmer
 from nltk.tokenize import word_tokenize
-from nltk.corpus import sentiwordnet as swn
 import pandas as pd
 import glob
 import numpy as np
 import os
-import re
-from pywsd import simple_lesk, disambiguate
 from pywsd.similarity import max_similarity
 
 
@@ -34,7 +30,6 @@ LABELS = [['ABSD', 'IRNY', 'ISLT', 'NHMR', 'OBSV', 'OTHR', 'VLGR', 'WPLY']]
 
 
 def sense_relate(sentence, context='all', window=1):
-    print("relating...")
     tokens = sentence.split()
     sense_list = []
     if context == 'all':
@@ -59,7 +54,6 @@ def sense_changes(sentence):
     counter = 0
     for sense_1, sense_2 in zip(senses_1, senses_2):
         if sense_1 and sense_2 and sense_1._name == sense_2._name:
-            print("counted")
             counter += 1
     return counter
 
