@@ -1,10 +1,7 @@
 import nltk
 import random
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import classification_report
+from sklearn.metrics import accuracy_score, classification_report, cohen_kappa_score
 from sklearn.feature_extraction import DictVectorizer
-from sklearn.preprocessing import MultiLabelBinarizer
 from sklearn.neural_network import MLPClassifier
 from operator import itemgetter
 from nltk.stem import PorterStemmer
@@ -13,6 +10,7 @@ import pandas as pd
 import glob
 import numpy as np
 import os
+import json
 from pywsd.similarity import max_similarity
 
 
@@ -27,6 +25,9 @@ pronouns = {'i', 'he', 'she', 'they', 'you', 'me', 'mine', 'your',
 notcontent = stopwords | punctuation | pronouns
 
 LABELS = [['ABSD', 'IRNY', 'ISLT', 'NHMR', 'OBSV', 'OTHR', 'VLGR', 'WPLY']]
+
+with open('train_test.json', 'r') as fp:
+    SPLIT = json.load(fp)
 
 
 def sense_relate(sentence, context='all', window=1):
@@ -98,9 +99,13 @@ def read_golds(csv_path):
     df = pd.concat(li, ignore_index=True)
     train_count = int(df.shape[0] * 0.8)
     test_count = df.shape[0] - train_count
-    labels = ['train']*train_count + ['test']*test_count
-    random.shuffle(labels)
-    df['type'] = labels
+
+    global SPLIT
+
+    if len(SPLIT) != df.shape[0]:
+        SPLIT = ['train']*train_count + ['test']*test_count
+        random.shuffle(SPLIT)
+    df['type'] = SPLIT
     for index, row in df.iterrows():
         if type(row['tweet_text']) != str:
             df.drop(index, inplace=True)
@@ -110,7 +115,6 @@ def read_golds(csv_path):
 def featurize(csv_path, feat_vocab, stemmer, skip=1):
     cols = ['_type_', '_label_']
     cols.extend(list(feat_vocab))
-    cols.extend(['sense_changes', 'length'])
 
     data_frame = read_golds(csv_path)
 
@@ -120,22 +124,21 @@ def featurize(csv_path, feat_vocab, stemmer, skip=1):
     feat_data_frame.fillna(0, inplace=True)  # inplace: mutable
     for index, row in data_frame.iterrows():
         if index % skip == 0:
-            print(index, f'of {data_frame.shape[0]}')
+            if index % (data_frame.shape[0]//25) == 0:
+                print(index, f'of {data_frame.shape[0]}')
             feat_data_frame.loc[index, '_type_'] = row['type']
             if 'WPLY' in set(row['tweet_classifications'].split('_')):
-                feat_data_frame.loc[index, '_label_'] = 'WPLY'
+                feat_data_frame.loc[index, '_label_'] = 1
             else:
-                feat_data_frame.loc[index, '_label_'] = 'NOT_WPLY'
+                feat_data_frame.loc[index, '_label_'] = 0
             for token in stem_tokens(stemmer, row['tweet_text']):
                 if token in feat_vocab:
                     feat_data_frame.loc[index, token] += 1
-                    feat_data_frame.loc[index, 'length'] += 1
-            feat_data_frame.loc[index, 'sense_changes'] = sense_changes(' '.join(tokenize(row['tweet_text'])))
 
     return feat_data_frame
 
 
-def vectorize(df, mlb=None):
+def vectorize(df):
     df = df.fillna(0)
     for index, row in df.iterrows():
         if row['_type_'] == '0':
@@ -151,11 +154,7 @@ def vectorize(df, mlb=None):
     vec = DictVectorizer()
     data = vec.fit_transform(data).toarray()
     print('data.shape:', data.shape)
-    if mlb:
-        combined_labels = [label.split('_') for label in df._label_.values]
-        labels = mlb.transform(combined_labels)
-    else:
-        labels = df._label_.values
+    labels = df._label_.values
     print('labels.shape:', labels.shape)
     return data, labels
 
@@ -181,51 +180,28 @@ def custom_split(df: pd.DataFrame):
     return train, test
 
 
-def classify(feat_csv, mlb: MultiLabelBinarizer = None):
-    # Moved the csv loading and splitting
-    # to here for easier control
+def classify(feat_csv, labels):
     df = pd.read_csv(feat_csv, encoding='latin1')
-    #init_train, init_test = train_test_split(df, test_size=0.2)
     init_train, init_test = custom_split(df)
     print(init_train.shape, init_test.shape)
 
-    if mlb:
-        X_train, y_train = vectorize(init_train, mlb)
-        X_test, y_test = vectorize(init_test, mlb)
-        model = MLPClassifier(solver='lbfgs',
-                              verbose=0,
-                              max_iter=500)
-        model = train_model(X_train, y_train, model)
-        accuracy, report, predictions = test_model(X_test, y_test, model, mlb.classes_)
-    else:
-        X_train, y_train = vectorize(init_train)
-        X_test, y_test = vectorize(init_test)
-        model = LogisticRegression(multi_class='multinomial',
-                                   penalty='l2',
-                                   solver='lbfgs',
-                                   max_iter=500,
-                                   verbose=1)
-        model = train_model(X_train, y_train, model)
-        accuracy, report, predictions = test_model(X_test, y_test, model)
+    X_train, y_train = vectorize(init_train)
+    X_test, y_test = vectorize(init_test)
+    model = MLPClassifier(solver='lbfgs',
+                          verbose=0,
+                          max_iter=500)
+    model = train_model(X_train, y_train, model)
+    accuracy, report, predictions = test_model(X_test, y_test, model, labels)
 
     print(report)
+    print("Cohen's kappa score:", cohen_kappa_score(y_test, predictions))
     return accuracy, report, predictions
 
 
-def cohen_kappa(y_gold, y_pred, labels):
-    print("""Cohen's Kappa scores:""")
-    for index, label in enumerate(labels):
-        arr = np.zeros((2, 2))
-        for gold_sample in y_gold:
-            for pred_sample in y_pred:
-                arr[gold_sample[index], pred_sample[index]] += 1
-        total = arr.sum()
-        p_o = arr.trace() / total
-        p_e = 0
-        for i in range(len(arr)):
-            p_e += np.sum(arr[i]) * np.sum(arr[:, i])
-        p_e /= (total ** 2)
-        print(f"    {label}    {(p_o - p_e) / (1 - p_e)}")
+def extract_support_from_gold(feat_csv):
+    df = pd.read_csv(feat_csv, encoding='latin1')
+    init_train, init_test = custom_split(df)
+    return init_test[init_test._label_==1].count(), init_test
 
 
 if __name__ == '__main__':
@@ -234,6 +210,6 @@ if __name__ == '__main__':
     print(len(feat_vocab))
     selected_feat_vocab = select_features(feat_vocab)
     feat_data_frame = featurize('gold', selected_feat_vocab, ps)
-    featfile = os.path.join(os.path.curdir, "wordplay_features.csv")
+    featfile = os.path.join(os.path.curdir, "wordplay_features_unigrams_only.csv")
     feat_data_frame.to_csv(featfile, encoding='latin1', index=False)
-    accuracy, report, predictions = classify('wordplay_features.csv')
+    accuracy, report, predictions = classify('wordplay_features_unigrams_only.csv', labels=['NOT_WPLY', 'WPLY'])
