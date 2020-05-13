@@ -137,5 +137,91 @@ Cohen's kappa score: 0.4322774534526236
 ```
 Trial 2:
 ```
-
+              precision    recall  f1-score   support
+    NOT_WPLY       0.77      0.76      0.76       202
+        WPLY       0.67      0.67      0.67       144
+    accuracy                           0.73       346
+   macro avg       0.72      0.72      0.72       346
+weighted avg       0.73      0.73      0.73       346
+Cohen's kappa score: 0.4355531133015077
+```
+Trial 3:
+```
+              precision    recall  f1-score   support
+    NOT_WPLY       0.76      0.77      0.76       198
+        WPLY       0.68      0.67      0.68       148
+    accuracy                           0.73       346
+   macro avg       0.72      0.72      0.72       346
+weighted avg       0.72      0.73      0.73       346
+Cohen's kappa score: 0.43771596701905635
+```
+Trial 4:
+```
+              precision    recall  f1-score   support
+    NOT_WPLY       0.78      0.76      0.77       205
+        WPLY       0.66      0.68      0.67       141
+    accuracy                           0.73       346
+   macro avg       0.72      0.72      0.72       346
+weighted avg       0.73      0.73      0.73       346
+Cohen's kappa score: 0.43987875865394555
+```
+Trial 5:
+```
+              precision    recall  f1-score   support
+    NOT_WPLY       0.77      0.75      0.76       204
+        WPLY       0.66      0.67      0.66       142
+    accuracy                           0.72       346
+   macro avg       0.71      0.71      0.71       346
+weighted avg       0.72      0.72      0.72       346
+Cohen's kappa score: 0.4225594439282887
+```
+Trial 6:
+```
+              precision    recall  f1-score   support
+    NOT_WPLY       0.75      0.77      0.76       196
+        WPLY       0.68      0.66      0.67       150
+    accuracy                           0.72       346
+   macro avg       0.71      0.71      0.71       346
+weighted avg       0.72      0.72      0.72       346
+Cohen's kappa score: 0.42697626771384667
+```
+Trial 7:
+```
+              precision    recall  f1-score   support
+    NOT_WPLY       0.77      0.75      0.76       204
+        WPLY       0.66      0.67      0.66       142
+    accuracy                           0.72       346
+   macro avg       0.71      0.71      0.71       346
+weighted avg       0.72      0.72      0.72       346
+Cohen's kappa score: 0.4225594439282887
+```
+Trial 8:
+```
+              precision    recall  f1-score   support
+    NOT_WPLY       0.78      0.75      0.76       207
+        WPLY       0.65      0.68      0.66       139
+    accuracy                           0.72       346
+   macro avg       0.71      0.71      0.71       346
+weighted avg       0.72      0.72      0.72       346
+Cohen's kappa score: 0.42685578217206754
+```
+Trial 9:
+```
+              precision    recall  f1-score   support
+    NOT_WPLY       0.77      0.76      0.77       204
+        WPLY       0.66      0.68      0.67       142
+    accuracy                           0.73       346
+   macro avg       0.72      0.72      0.72       346
+weighted avg       0.73      0.73      0.73       346
+Cohen's kappa score: 0.4344654347751281
+```
+Trial 10:
+```
+              precision    recall  f1-score   support
+    NOT_WPLY       0.76      0.75      0.76       204
+        WPLY       0.65      0.66      0.66       142
+    accuracy                           0.71       346
+   macro avg       0.70      0.71      0.71       346
+weighted avg       0.71      0.71      0.71       346
+Cohen's kappa score: 0.4106534530814493
 ```
